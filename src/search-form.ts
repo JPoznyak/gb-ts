@@ -10,13 +10,10 @@ import { renderBlock } from './lib.js';
 
 const defaultDate = (date: Date, daysToShift: number): Date =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate() + daysToShift);
-
 const getLastDayOfNextMonth = (date: Date): Date =>
   new Date(date.getFullYear(), date.getMonth() + 2, 0);
-
 const pad = (v: string | number): string =>
 `0${v}`.slice(-2);
-
 const formatDate = (date: Date): string =>
   `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 
@@ -24,18 +21,12 @@ export function renderSearchFormBlock(
   checkInDate?: Date,
   checkOutDate?: Date
 ): void {
-  // изменяем дату прибытия
   checkInDate = checkInDate || defaultDate(new Date(), 1)
-  // форматируем дату
   const checkIn = formatDate(checkInDate);
-  // изменяем дату отбытия
   const checkOut = formatDate(checkOutDate || defaultDate(checkInDate, 2));
-  //форматируем текущую дату
   const now = formatDate(new Date());
-  // получаем дату последнего дня в месяце
   const lastDayOfNextMonth = formatDate(getLastDayOfNextMonth(new Date()));
     
-  
   renderBlock(
     'search-form-block',
     `
