@@ -1,21 +1,12 @@
 import { renderBlock } from './lib.js';
+import { formatDate, getLastDayOfNextMonth, defaultDate } from './date-utils.js';
 
-/** Функция рендера формы поиска
- * @param date {Date} - дата 
- * @param checkInDate {Date} - дата прибытия в отель
- * @param checkOutDate {Date} - дата отбытия в отель
- * @param daysToShift {number} - на какое количество дней сдвинуть
-
- */
-
-const defaultDate = (date: Date, daysToShift: number): Date =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate() + daysToShift);
-const getLastDayOfNextMonth = (date: Date): Date =>
-  new Date(date.getFullYear(), date.getMonth() + 2, 0);
-const pad = (v: string | number): string =>
-`0${v}`.slice(-2);
-const formatDate = (date: Date): string =>
-  `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+export interface SearchFormData {
+  city: string;
+  checkin: Date;
+  checkout: Date;
+  price: number;
+}
 
 export function renderSearchFormBlock(
   checkInDate?: Date,
@@ -57,7 +48,7 @@ export function renderSearchFormBlock(
             <input id="max-price" type="text" value="" name="price" class="max-price" />
           </div>
           <div>
-            <div><button>Найти</button></div>
+            <div><button class="button">Найти</button></div>
           </div>
         </div>
       </fieldset>
@@ -65,3 +56,25 @@ export function renderSearchFormBlock(
     `
   )
 }
+
+function searchItem (value: SearchFormData): void {
+  console.log(value)
+}
+
+const button = document.querySelector('.button')
+
+button.addEventListener('click', (e) => {
+  const city = document.getElementById('city')
+  const checkin = document.getElementById('check-in-date')
+  const checkout = document.getElementById('check-out-date')
+  const price = document.getElementById('max-price')
+
+  searchItem ({
+    'city': city.getAttribute('value'),
+    'checkin': new Date (checkin.getAttribute('value')),
+    'checkout': new Date (checkout.getAttribute('value')),
+    'price': parseInt(price.getAttribute('value'))
+  })
+  return searchItem;
+})
+
