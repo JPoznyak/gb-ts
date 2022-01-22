@@ -2,13 +2,13 @@ import { renderBlock } from './lib.js'
 
 export class User {
   userName: string
-  avatarSrc: string
+  avatarUrl: string
   favoritesAmount: number
 
-  constructor(userName: string, avatarSrc: string, favoritesAmount: number) {
+  constructor(userName: string, avatarUrl: string, favoritesAmount: number) {
     this.userName = userName
-    this.avatarSrc = avatarSrc
-    favoritesAmount = favoritesAmount
+    this.avatarUrl = avatarUrl
+    this.favoritesAmount = favoritesAmount
   }
 }
 
@@ -21,7 +21,7 @@ export function getUserData(): User | null {
   if (
     typeof data === "object" &&
     "username" in data &&
-    "avatarSrc" in data
+    "avatarUrl" in data
   ) {
     return data as User;
   }
@@ -36,17 +36,18 @@ export function getFavoritesAmount(): number | null {
   return null
 }  
 
-export function renderUserBlock (userName: string, avatarSrc: string, favoriteItemsAmount: number): void {
+export function renderUserBlock (userName: string, avatarUrl: string, favoriteItemsAmount: number): void {
   const favoritesCaption = favoriteItemsAmount 
-    ? `Выбранных: ${favoriteItemsAmount}`
+    ? `Избранных: ${favoriteItemsAmount}`
     : 'ничего нет';
+
   // const hasFavoriteItems = favoriteItemsAmount ? true : false;
   const hasFavoriteItems = !!favoriteItemsAmount;
   renderBlock(
     'user-block',
     `
     <div class="header-container">
-      <img class="avatar" src="${avatarSrc}" alt="${userName}" />
+      <img class="avatar" src="${avatarUrl}" alt="${userName}" />
       <div class="info">
           <p class="name">${userName}</p>
           <p class="fav">
