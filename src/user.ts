@@ -13,7 +13,7 @@ export class User {
 }
 
 export function getUserData(): User | null {
-  const rawData = localStorage.get("user");
+  const rawData = localStorage.getItem("user");
   let data: unknown;
   if (rawData) {
     data = JSON.parse(rawData);
@@ -29,7 +29,7 @@ export function getUserData(): User | null {
 }  
 
 export function getFavoritesAmount(): number | null {
-  const rawData = localStorage.get('favoritesAmount');
+  const rawData = localStorage.getItem('favoritesAmount');
   if (rawData != null) {
     return parseInt(rawData);
   }

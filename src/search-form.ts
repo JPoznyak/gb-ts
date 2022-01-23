@@ -2,11 +2,13 @@ import { renderBlock } from './lib.js';
 import { formatDate, getLastDayOfNextMonth, defaultDate } from './date-utils.js';
 
 export interface SearchFormData {
-  city: string;
-  checkin: Date;
-  checkout: Date;
-  price: number;
+  // city: string;
+  checkin: string;
+  checkout: string;
+  price: string;
 }
+
+export interface Place {}
 
 export function renderSearchFormBlock(
   checkInDate?: Date,
@@ -21,7 +23,7 @@ export function renderSearchFormBlock(
   renderBlock(
     'search-form-block',
     `
-    <form>
+    <form id="search-form>
       <fieldset class="search-filedset">
         <div class="row">
           <div>
@@ -48,7 +50,7 @@ export function renderSearchFormBlock(
             <input id="max-price" type="text" value="" name="price" class="max-price" />
           </div>
           <div>
-            <div><button class="button">Найти</button></div>
+            <div><button>Найти</button></div>
           </div>
         </div>
       </fieldset>
@@ -57,24 +59,21 @@ export function renderSearchFormBlock(
   )
 }
 
-function searchItem (value: SearchFormData): void {
-  console.log(value)
+export function getSearchFormData(): SearchFormData {
+  const formData = new FormData(document.querySelector('#search-form'));
+  return {
+    checkin: formData.get('checkin') as string,
+    checkout: formData.get('checkout') as string,
+    price: formData.get('price') as string
+  }
 }
 
-const button = document.querySelector('.button')
+export function search(SearchFormData: SearchFormData, cb: (err: Error, result: Place[]) => {} ) {
+  console.log(SearchFormData);
 
-button.addEventListener('click', (e) => {
-  const city = document.getElementById('city')
-  const checkin = document.getElementById('check-in-date')
-  const checkout = document.getElementById('check-out-date')
-  const price = document.getElementById('max-price')
-
-  searchItem ({
-    'city': city.getAttribute('value'),
-    'checkin': new Date (checkin.getAttribute('value')),
-    'checkout': new Date (checkout.getAttribute('value')),
-    'price': parseInt(price.getAttribute('value'))
-  })
-  return searchItem;
-})
-
+  if(Math.random() < 0.5) {
+    cb(new Error, null)
+  } else {
+    cb(null, []);
+  }
+}

@@ -4,17 +4,19 @@ import { renderUserBlock, getUserData, getFavoritesAmount } from './user.js'
 import { renderToast } from './lib.js'
 
 window.addEventListener('DOMContentLoaded', () => {
-  const user = getUserData();
-  renderUserBlock(user.userName, user.avatarUrl, getFavoritesAmount())
-  // renderUserBlock('Wade Warren', './img/avatar.png', 0)
+  // getUserData()
+  // getFavoritesAmount()
+  renderUserBlock('Wade Warren', '/img/avatar.png', 0)
   renderSearchFormBlock()
   renderSearchStubBlock()
   renderToast(
-    { text: 'Это пример уведомления. Используйте его при необходимости', type: 'success' },
-    { name: 'Понял', handler: () => { console.log('Уведомление закрыто') } }
+      {
+        text: 'Это пример уведомления. Используйте его при необходимости', 
+        type: 'success'
+      },
+      {
+        name: 'Понял', 
+        handler: () => console.log('Уведомление закрыто')
+      }
   )
 })
-
-
-
-  
