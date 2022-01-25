@@ -1,20 +1,8 @@
-export async function getTodosByCount<T>(
-  request: RequestInfo
-  ): Promise<T> {
-    const response = await fetch(request);
-    const body = await response.json();
-    return body;
-  }
-  
-  interface Todo {
-    userId: number;
-    id: number;
-    title: string;
-    completed: boolean;
-  }
-  
-  const data = getTodosByCount<Todo[]>(
-    "https://jsonplaceholder.typicode.com/todos"
-  );
+export function getTodosByCount(count: number) {
+    for (let i = 1; i < count; i++) {
+        return fetch('https://jsonplaceholder.typicode.com/todos/' + i)
+        .then(response => response.json())
+        .then(json => console.log(json))
+    }
+}
 
-  console.log(data);

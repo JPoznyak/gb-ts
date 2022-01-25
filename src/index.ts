@@ -21,3 +21,5 @@ window.addEventListener('DOMContentLoaded', () => {
       }
   )
 })
+
+getTodosByCount(10);
