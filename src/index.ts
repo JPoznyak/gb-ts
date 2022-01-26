@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderUserBlock('Wade Warren', '/img/avatar.png', 0)
   renderSearchFormBlock()
   renderSearchStubBlock()
+  getTodosByCount(10);
   renderToast(
       {
         text: 'Это пример уведомления. Используйте его при необходимости', 
@@ -21,5 +22,3 @@ window.addEventListener('DOMContentLoaded', () => {
       }
   )
 })
-
-getTodosByCount(10);
