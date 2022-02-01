@@ -1,12 +1,14 @@
 {
+    "extends": "./tsconfig-checks.json",
     "compilerOptions": {
       "outDir": "public/scripts",
       "target": "es2015",
       "module": "es2015",
       "moduleResolution": "node",
       "allowJs": true,
-      "declaration": true,
-      "declarationDir": "public/scripts/types"
+      // "declaration": true,
+      // "declarationDir": "public/scripts/types",
+      // "strict": true
     },
     "include": [
       "src/**/*" 

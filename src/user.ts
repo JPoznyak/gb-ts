@@ -1,48 +1,51 @@
 import { renderBlock } from './lib.js'
 
-export class User {
-  userName: string
-  avatarUrl: string
-  favoritesAmount: number
+const userData = {
+  userName: 'Wade Warren',
+  avatarUrl: '/img/avatar.png'
+};
 
-  constructor(userName: string, avatarUrl: string, favoritesAmount: number) {
-    this.userName = userName
-    this.avatarUrl = avatarUrl
-    this.favoritesAmount = favoritesAmount
-  }
+interface User {
+  userName: string,
+  avatarUrl: string
 }
 
-export function getUserData(): User | null {
-  const rawData = localStorage.getItem("user");
-  let data: unknown;
-  if (rawData) {
-    data = JSON.parse(rawData);
-  }
-  if (
-    typeof data === "object" &&
-    "username" in data &&
-    "avatarUrl" in data
-  ) {
-    return data as User;
-  }
-  return null;
-}  
+localStorage.setItem('user', JSON.stringify(userData));
+localStorage.setItem('favoritesAmount', '0');
 
-export function getFavoritesAmount(): number | null {
-  const rawData = localStorage.getItem('favoritesAmount');
-  if (rawData != null) {
-    return parseInt(rawData);
+const getDataFromLocalStorage = (key: string): string | null => {
+  return localStorage.getItem(key);
+}
+
+function instanceOfUser(object: any): object is User {
+  return 'userName' in object && 'avatarUrl' in object;
+}
+
+export const getUserData = (): User => {
+  const func = getDataFromLocalStorage('user');
+  if (func !== null) {
+    const data: unknown = JSON.parse(func);
+    if (instanceOfUser(data)) {
+      return data
+    } else {
+      return {userName: '', avatarUrl: ''};
+    }
   }
-  return null
-}  
+  return {userName: '', avatarUrl: ''};
+};
+
+export const getFavoritesAmount = (): number => {
+  const data: unknown = getDataFromLocalStorage('favoritesAmount');
+  return Number(data);
+};
 
 export function renderUserBlock (userName: string, avatarUrl: string, favoriteItemsAmount: number): void {
-  const favoritesCaption = favoriteItemsAmount 
-    ? `Избранных: ${favoriteItemsAmount}`
-    : 'ничего нет';
+  if (favoriteItemsAmount !== undefined) {
+    if (favoriteItemsAmount < 0) favoriteItemsAmount = 0
+  }
+  const favoritesCaption = favoriteItemsAmount ? favoriteItemsAmount : 'ничего нет';
+  const hasFavoriteItems = favoriteItemsAmount ? true : false;
 
-  // const hasFavoriteItems = favoriteItemsAmount ? true : false;
-  const hasFavoriteItems = !!favoriteItemsAmount;
   renderBlock(
     'user-block',
     `
@@ -58,3 +61,7 @@ export function renderUserBlock (userName: string, avatarUrl: string, favoriteIt
     `
   )
 }
+
+
+
+

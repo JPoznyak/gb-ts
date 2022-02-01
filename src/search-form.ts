@@ -1,15 +1,6 @@
 import { renderBlock } from './lib.js';
 import { formatDate, getLastDayOfNextMonth, defaultDate } from './date-utils.js';
 
-export interface SearchFormData {
-  // city: string;
-  checkin: string;
-  checkout: string;
-  price: string;
-}
-
-export interface Place {}
-
 export function renderSearchFormBlock(
   checkInDate?: Date,
   checkOutDate?: Date
@@ -19,11 +10,11 @@ export function renderSearchFormBlock(
   const checkOut = formatDate(checkOutDate || defaultDate(checkInDate, 2));
   const now = formatDate(new Date());
   const lastDayOfNextMonth = formatDate(getLastDayOfNextMonth(new Date()));
-    
+
   renderBlock(
     'search-form-block',
     `
-    <form id="search-form>
+    <form class="searchForm" type="submit">
       <fieldset class="search-filedset">
         <div class="row">
           <div>
@@ -57,23 +48,4 @@ export function renderSearchFormBlock(
     </form>
     `
   )
-}
-
-export function getSearchFormData(): SearchFormData {
-  const formData = new FormData(document.querySelector('#search-form'));
-  return {
-    checkin: formData.get('checkin') as string,
-    checkout: formData.get('checkout') as string,
-    price: formData.get('price') as string
-  }
-}
-
-export function search(SearchFormData: SearchFormData, cb: (err: Error, result: Place[]) => {} ) {
-  console.log(SearchFormData);
-
-  if(Math.random() < 0.5) {
-    cb(new Error, null)
-  } else {
-    cb(null, []);
-  }
 }

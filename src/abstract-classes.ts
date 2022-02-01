@@ -8,8 +8,7 @@
 // а также должен наследоваться класс MyRectangle с свойствами: ширина и высота
 
 abstract class MyGraphicsPrimitive2D {
-    protected leftTop: {x: number, y: number};
-    protected rightBottom: {x: number, y: number};
+    protected rectangularArea: number[] = [];
     protected abstract movePrimitive(offsetX: number, offsetY: number): void;
 }
 
@@ -43,6 +42,7 @@ export class MyRectangle extends MyAreaPrimitive2D {
         public rightBottom: {x: number, y: number},
     ) {
         super();
+        this.rectangularArea = [width, height];
     }
     movePrimitive(offsetX: number, offsetY: number): void {
     this.leftTop.x += offsetX;
